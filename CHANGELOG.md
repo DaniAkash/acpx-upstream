@@ -8,6 +8,10 @@ Repo: https://github.com/openclaw/acpx
 
 ### Changes
 
+- Runtime/events: enrich the `usage_update` event with `cost` and a typed `breakdown` (input/output/cachedRead/cachedWrite/thought/total tokens) normalized from the wire payload's `_meta.usage`. Previously only `used` and `size` survived into the runtime event stream, so downstream consumers couldn't render live context bars with cost or per-turn token detail.
+- Runtime/events: enrich the `available_commands_update` event with the full `availableCommands` list (name, description, hasInput flag) instead of dropping it to a one-line summary. Lets clients discover whether the active agent advertises `/compact`, `/clear`, and similar commands.
+- Runtime/getStatus: surface `usage` (cumulative + per-request token breakdowns) and `availableCommands` from the persisted session record. The reducer already stashes both; the runtime now exposes them through the public status API.
+
 ### Breaking
 
 ### Fixes
